@@ -116,6 +116,7 @@ export class App {
       }
 
       this.serivce.createUser(payload).subscribe((res: any) => {
+        this.signupForm.reset();
         Swal.fire({
           title: "Success",
           html: res?.msg,
@@ -152,6 +153,7 @@ export class App {
 
       this.serivce.loginUser(payload).subscribe((res:any)=>{
         if(res.user){
+          this.loginForm.reset();
           this.showLogin = false;
           Swal.fire({
             title: "Success",
