@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, signal } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { BookService } from '../services/book.service';
 
@@ -15,18 +15,31 @@ import { BookService } from '../services/book.service';
 export class App {
 
   books:any = [];
+  signupForm:any;
+  showSignup:boolean = false;
   constructor(
     private serivce: BookService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private fb: FormBuilder
   ){
 
   }
 
   ngOnInit(): void {
+    this.initForm();
     this.getBooksList();
   }
   protected readonly title = signal('book-store-ui');
 
+
+  initForm(){
+    this.signupForm = this.fb.group({
+    name: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]],
+    mobile: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
+    password: ['', [Validators.required, Validators.minLength(6)]]
+  });
+  }
 // filteredBooks = [...this.books];
 searchTerm = '';
 // categories = ['Self Help', 'Finance', 'Programming', 'Fiction'];
@@ -63,6 +76,7 @@ openLogin() {
 
 openSignup() {
   console.log('Signup modal');
+   this.showSignup = true;
 }
 
 getBooksList(){
@@ -71,4 +85,16 @@ getBooksList(){
     this.cdr.detectChanges();
   })
 }
+
+ closeSignup() {
+    this.showSignup = false;
+  }
+
+   onSignup() {
+    if (this.signupForm.valid) {
+      console.log(this.signupForm.value);
+      // 🔥 Call API here
+      this.closeSignup();
+    }
+  }
 }

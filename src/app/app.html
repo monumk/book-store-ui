@@ -44,3 +44,63 @@
     No books found
   </div>
 </section>
+
+
+
+
+<!-- signup popup -->
+<div class="overlay" *ngIf="showSignup">
+
+  <div class="signup-modal">
+
+    <!-- LEFT SIDE (branding) -->
+    <div class="left-panel">
+      <h2>📚 BookVerse</h2>
+      <p>Join thousands of readers and explore amazing books</p>
+    </div>
+
+    <!-- RIGHT SIDE (form) -->
+    <div class="right-panel">
+
+      <div class="header">
+        <h3>Create Account</h3>
+        <span (click)="closeSignup()">✕</span>
+      </div>
+
+      <form [formGroup]="signupForm" (ngSubmit)="onSignup()">
+
+        <div class="input-group">
+          <input type="text" formControlName="name" required />
+          <label>Name</label>
+        </div>
+
+        <div class="input-group">
+          <input type="email" formControlName="email" required />
+          <label>Email</label>
+        </div>
+
+        <div class="input-group">
+          <input type="text" formControlName="mobile" required />
+          <label>Mobile</label>
+        </div>
+
+        <div class="input-group">
+          <input type="password" formControlName="password" required />
+          <label>Password</label>
+        </div>
+
+        <button type="submit" class="signup-btn" [disabled]="signupForm.invalid">
+          Create Account
+        </button>
+
+      </form>
+
+      <p class="footer-text">
+        Already have an account?
+        <span (click)="openLogin()">Sign In</span>
+      </p>
+
+    </div>
+
+  </div>
+</div>
