@@ -17,6 +17,8 @@ export class App {
 
   books: any = [];
   signupForm: any;
+  loginForm: any;
+  showLogin:boolean = false;
   showSignup: boolean = false;
   constructor(
     private serivce: BookService,
@@ -28,6 +30,7 @@ export class App {
 
   ngOnInit(): void {
     this.initForm();
+    this.initLoginForm();
     this.getBooksList();
   }
   protected readonly title = signal('book-store-ui');
@@ -40,6 +43,13 @@ export class App {
       mobile: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
+  }
+
+  initLoginForm(){
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]]
+    })
   }
   // filteredBooks = [...this.books];
   searchTerm = '';
@@ -72,6 +82,7 @@ export class App {
   }
 
   openLogin() {
+    this.showLogin = true;
     console.log('Login modal');
   }
 
@@ -119,7 +130,44 @@ export class App {
           icon: "info",
           confirmButtonColor: "#3e70cb",
         })
-        console.log(err?.error?.msg)
+      })
+    }
+  }
+
+  switchToSignup(){
+    this.showLogin = false;
+    this.openSignup();
+  }
+
+  closeLogin(){
+    this.showLogin = false;
+  }
+
+  onLogin(){
+    if(this.loginForm.valid){
+      let payload = {
+        "email": this.loginForm.value.email,
+        "password": this.loginForm.value.password
+      }
+
+      this.serivce.loginUser(payload).subscribe((res:any)=>{
+        if(res.user){
+          this.showLogin = false;
+          Swal.fire({
+            title: "Success",
+            html: res?.msg,
+            icon: "success",
+            confirmButtonColor: "#3e70cb",
+          })
+          localStorage.setItem("user", JSON.stringify(res.user))
+        }
+      },(err)=>{
+        Swal.fire({
+          title: "Warning",
+          html: err?.error?.msg,
+          icon: "info",
+          confirmButtonColor: "#3e70cb",
+        })
       })
     }
   }
