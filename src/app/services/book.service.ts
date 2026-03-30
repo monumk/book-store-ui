@@ -23,4 +23,12 @@ export class BookService {
   loginUser(data:any){
     return this.http.post(`${environment.API_URL}user/login`, data)
   }
+
+  addFavouriteBook(data:any){
+    return this.http.post(`${environment.API_URL}book/addFavouriteBook`, data)
+  }
+
+  removeFavouriteBook(data:any){
+    return this.http.post(`${environment.API_URL}book/removeFavouriteBook`, data)
+  }
 }

@@ -1,0 +1,136 @@
+<header class="nav">
+  <div class="logo">📚 BookStore</div>
+
+  @if (!currentUser) {
+    <div class="nav-actions">
+      <button class="btn ghost" (click)="openLogin()">Sign In</button>
+      <button class="btn primary" (click)="openSignup()">Sign Up</button>
+    </div>
+  }
+
+  @if (currentUser) {
+    <div class="nav-actions">
+        <button class="btn ghost">Favourite Books</button>
+    </div>
+  }
+</header>
+
+
+
+
+  <!-- signup popup -->
+<div class="overlay" *ngIf="showSignup">
+
+  <div class="signup-modal">
+
+    <!-- LEFT SIDE (branding) -->
+    <div class="left-panel">
+      <h2>📚 BookVerse</h2>
+      <p>Join thousands of readers and explore amazing books</p>
+    </div>
+
+    <!-- RIGHT SIDE (form) -->
+    <div class="right-panel">
+
+      <div class="header">
+        <h3>Create Account</h3>
+        <span (click)="closeSignup()">✕</span>
+      </div>
+
+      <form [formGroup]="signupForm">
+
+        <div class="input-group">
+          <input type="text" formControlName="name" required />
+          <label>Name</label>
+        </div>
+
+        <div class="input-group">
+          <input type="email" formControlName="email" required />
+          <label>Email</label>
+        </div>
+
+        <div class="input-group">
+          <input type="text" formControlName="mobile" required maxlength="10"/>
+          <label>Mobile</label>
+        </div>
+
+        <div class="input-group">
+          <input type="password" formControlName="password" required />
+          <label>Password</label>
+        </div>
+
+        <button type="submit" class="signup-btn" [disabled]="signupForm.invalid" (click)="onSignup()">
+          Create Account
+        </button>
+
+      </form>
+
+      <p class="footer-text">
+        Already have an account?
+        <span (click)="openLogin()">Sign In</span>
+      </p>
+
+    </div>
+
+  </div>
+</div>
+
+
+
+<div class="sign-in-user-overlay" *ngIf="showLogin">
+
+  <div class="sign-in-user-modal">
+
+    <!-- LEFT PANEL -->
+    <div class="sign-in-user-left">
+      <h2>📚 BookVerse</h2>
+      <p>Welcome back! Continue your reading journey</p>
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <div class="sign-in-user-right">
+
+      <div class="sign-in-user-header">
+        <h3>Sign In</h3>
+        <span (click)="closeLogin()">✕</span>
+      </div>
+
+      <form [formGroup]="loginForm">
+
+        <!-- EMAIL -->
+        <div class="sign-in-user-input-group">
+          <input type="email" formControlName="email" required />
+          <label>Email</label>
+        </div>
+
+        <!-- PASSWORD -->
+        <div class="sign-in-user-input-group">
+          <input type="password" formControlName="password" required />
+          <label>Password</label>
+        </div>
+
+        <!-- OPTIONS -->
+        <div class="sign-in-user-options">
+          <label>
+            <input type="checkbox" /> Remember me
+          </label>
+          <span class="sign-in-user-forgot">Forgot password?</span>
+        </div>
+
+        <!-- BUTTON -->
+        <button type="submit" class="sign-in-user-btn" (click)="onLogin()" [disabled]="loginForm.invalid">
+          Sign In
+        </button>
+
+      </form>
+
+      <!-- FOOTER -->
+      <p class="sign-in-user-footer">
+        Don’t have an account?
+        <span (click)="switchToSignup()">Sign Up</span>
+      </p>
+
+    </div>
+
+  </div>
+</div>

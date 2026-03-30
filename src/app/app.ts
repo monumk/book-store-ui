@@ -1,56 +1,46 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, signal } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { ChangeDetectorRef, Component, signal, PLATFORM_ID, Inject  } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { BookService } from './services/book.service';
 import Swal from 'sweetalert2';
+import { Header } from '../app/common/header/header'
 
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrl: './app.scss',
-  imports: [ReactiveFormsModule, FormsModule, CommonModule], // ✅ HERE
+  imports: [ReactiveFormsModule, FormsModule, CommonModule, Header], // ✅ HERE
 
 })
 export class App {
 
   books: any = [];
-  signupForm: any;
-  loginForm: any;
-  showLogin:boolean = false;
-  showSignup: boolean = false;
+  currentUser:any;
   constructor(
     private serivce: BookService,
     private cdr: ChangeDetectorRef,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
 
   }
 
   ngOnInit(): void {
-    this.initForm();
-    this.initLoginForm();
+    
+
+     if (isPlatformBrowser(this.platformId)) {
+      let user = localStorage.getItem('user');
+
+      if(user){
+        this.currentUser = JSON.parse(user)
+      }
+    }
     this.getBooksList();
   }
   protected readonly title = signal('book-store-ui');
 
-
-  initForm() {
-    this.signupForm = this.fb.group({
-      name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      mobile: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
-    });
-  }
-
-  initLoginForm(){
-    this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
-    })
-  }
   // filteredBooks = [...this.books];
   searchTerm = '';
   // categories = ['Self Help', 'Finance', 'Programming', 'Fiction'];
@@ -81,16 +71,6 @@ export class App {
     // });
   }
 
-  openLogin() {
-    this.showLogin = true;
-    console.log('Login modal');
-  }
-
-  openSignup() {
-    console.log('Signup modal');
-    this.showSignup = true;
-  }
-
   getBooksList() {
     this.serivce.getBooksList({}).subscribe((res: any) => {
       this.books = res.list;
@@ -98,79 +78,41 @@ export class App {
     })
   }
 
-  closeSignup() {
-    this.showSignup = false;
-  }
-
-  onSignup() {
-    console.log(this.signupForm.value)
-    if (this.signupForm.valid) {
-      console.log(this.signupForm.value);
-      // 🔥 Call API here
-
-      let payload = {
-        "name": this.signupForm.value.name,
-        "email": this.signupForm.value.email,
-        "mobile": this.signupForm.value.mobile,
-        "password": this.signupForm.value.password
-      }
-
-      this.serivce.createUser(payload).subscribe((res: any) => {
-        this.signupForm.reset();
-        Swal.fire({
-          title: "Success",
-          html: res?.msg,
-          icon: "success",
-          confirmButtonColor: "#3e70cb",
-        })
-        this.closeSignup();
-      }, (err) => {
-        Swal.fire({
-          title: "Warning",
-          html: err?.error?.msg,
-          icon: "info",
-          confirmButtonColor: "#3e70cb",
-        })
-      })
+  async addFavourite(isFavourite:any, bookId:any){
+    await this.checkUserLogin();
+    let payload = {
+      "userId": this.currentUser?.id,
+      "bookId": bookId
     }
+    this.serivce.addFavouriteBook(payload).subscribe((res:any)=>{
+      isFavourite = !isFavourite;
+      this.cdr.detectChanges();
+      this.getBooksList();
+    })
   }
 
-  switchToSignup(){
-    this.showLogin = false;
-    this.openSignup();
+  async removeFavourite(isFavourite:any, bookId:any){
+    await this.checkUserLogin();
+    let payload = {
+      "userId": this.currentUser?.id,
+      "bookId": bookId
+    }
+    this.serivce.removeFavouriteBook(payload).subscribe((res:any)=>{
+      isFavourite = !isFavourite;
+      this.cdr.detectChanges();
+      this.getBooksList();
+    })
   }
 
-  closeLogin(){
-    this.showLogin = false;
-  }
-
-  onLogin(){
-    if(this.loginForm.valid){
-      let payload = {
-        "email": this.loginForm.value.email,
-        "password": this.loginForm.value.password
-      }
-
-      this.serivce.loginUser(payload).subscribe((res:any)=>{
-        if(res.user){
-          this.loginForm.reset();
-          this.showLogin = false;
-          Swal.fire({
-            title: "Success",
-            html: res?.msg,
-            icon: "success",
-            confirmButtonColor: "#3e70cb",
-          })
-          localStorage.setItem("user", JSON.stringify(res.user))
-        }
-      },(err)=>{
-        Swal.fire({
+  async checkUserLogin(){
+    if(!this.currentUser){
+      Swal.fire({
           title: "Warning",
-          html: err?.error?.msg,
+          html: "Please login!!",
           icon: "info",
           confirmButtonColor: "#3e70cb",
         })
-      })
+      return 
     }
   }
 }
