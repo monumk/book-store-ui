@@ -67,7 +67,7 @@
         <span (click)="closeSignup()">✕</span>
       </div>
 
-      <form [formGroup]="signupForm" (ngSubmit)="onSignup()">
+      <form [formGroup]="signupForm">
 
         <div class="input-group">
           <input type="text" formControlName="name" required />
@@ -80,7 +80,7 @@
         </div>
 
         <div class="input-group">
-          <input type="text" formControlName="mobile" required />
+          <input type="text" formControlName="mobile" required maxlength="10"/>
           <label>Mobile</label>
         </div>
 
@@ -89,7 +89,7 @@
           <label>Password</label>
         </div>
 
-        <button type="submit" class="signup-btn" [disabled]="signupForm.invalid">
+        <button type="submit" class="signup-btn" [disabled]="signupForm.invalid" (click)="onSignup()">
           Create Account
         </button>
 
