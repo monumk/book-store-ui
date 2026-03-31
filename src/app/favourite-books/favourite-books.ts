@@ -18,11 +18,8 @@ export class FavouriteBooks {
     private service: BookService,
     @Inject(PLATFORM_ID) private platformId: Object,
     private cdr: ChangeDetectorRef
-  ){
-    alert("hu")
-  }
+  ){ }
   ngOnInit(): void {
-    alert(11)
   if (isPlatformBrowser(this.platformId)) {
       let user = localStorage.getItem('user');
 
