@@ -146,5 +146,22 @@ body {
   font-size: 20px;
 }
 
+.cart-btn {
+  padding: 6px 12px;
+  border: none;
+  background: linear-gradient(135deg, #ff6a00, #ff3d00);
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: 0.3s;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.cart-btn:hover {
+  opacity: 0.9;
+}
+
 /* INPUT STYLE */
 

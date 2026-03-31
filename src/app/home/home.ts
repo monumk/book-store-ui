@@ -115,4 +115,19 @@ export class Home {
       return 
     }
   }
+
+  addToCart(bookId:any){
+    let payload = {
+      userId: this.currentUser?.id,
+      bookId: bookId
+    }
+    this.serivce.addCartItem(payload).subscribe((res:any)=>{
+      Swal.fire({
+          title: "Success",
+          html: res?.msg,
+          icon: "success",
+          confirmButtonColor: "#3e70cb",
+        })
+    })
+  }
 }

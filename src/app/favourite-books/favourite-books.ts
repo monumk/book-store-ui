@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, Inject, PLATFORM_ID } from '@angular/core
 import { BookService } from '../services/book.service';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-favourite-books',
@@ -48,5 +49,20 @@ export class FavouriteBooks {
       this.cdr.detectChanges();
     })
   }
+
+  addToCart(bookId:any){
+   let payload = {
+         userId: this.currentUser?.id,
+         bookId: bookId
+       }
+       this.service.addCartItem(payload).subscribe((res:any)=>{
+         Swal.fire({
+             title: "Success",
+             html: res?.msg,
+             icon: "success",
+             confirmButtonColor: "#3e70cb",
+           })
+       })
+     }
 
 }

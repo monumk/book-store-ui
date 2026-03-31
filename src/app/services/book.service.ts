@@ -35,4 +35,8 @@ export class BookService {
   getFavouriteBook(data:any){
     return this.http.post(`${environment.API_URL}book/getFavouriteBooks`, data)
   }
+
+  addCartItem(data:any){
+    return this.http.post(`${environment.API_URL}cart/addCartItem`, data)
+  }
 }
