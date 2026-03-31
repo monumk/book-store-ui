@@ -1,1 +1,37 @@
-<p>book-detail works!</p>
+<div class="container">
+  <div class="book-card">
+
+    <!-- Left: Image -->
+    <div class="image-section">
+      <img [src]="book.image" alt="book" />
+    </div>
+
+    <!-- Right: Details -->
+    <div class="details-section">
+
+      <h1 class="title">{{ book.bookName }}</h1>
+      <p class="author">by {{ book.author }}</p>
+
+      <h2 class="price">₹{{ book.price }}</h2>
+
+      <!-- Quantity Selector -->
+      <!-- <div class="quantity-box">
+        <button (click)="decreaseQty()">-</button>
+        <span>{{ book?.quantity }}</span>
+        <button (click)="increaseQty()">+</button>
+      </div> -->
+
+      <!-- Add to Cart -->
+      <button class="cart-btn" (click)="addToCart()">
+        Add to Cart
+      </button>
+
+      <!-- Description -->
+      <div class="description">
+        <h3>Description</h3>
+        <p>{{ book.description }}</p>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -51,4 +51,8 @@ export class BookService {
   getCart(userId:any){
     return this.http.get(`${environment.API_URL}cart/getCartItems/${userId}`)
   }
+
+  getBook(bookId:any){
+    return this.http.get(`${environment.API_URL}book/getBook/${bookId}`)
+  }
 }
