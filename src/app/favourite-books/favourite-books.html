@@ -17,8 +17,8 @@
         <div class="bottom">
           <span>₹{{ book.price }}</span>
           <div style="display: flex; align-items: center;gap: 10px;">
-            <button routerLink="/book-detail" style="cursor: pointer;">View</button>
-          <img (click)="removeFavourite(book.isFavourite, book?._id)" src="assets/favourite.jpg" alt="" style="height: 20px;width: 20px;cursor: pointer;">
+            <button [routerLink]="['/book-detail', book?._id]" style="cursor: pointer;">View</button>
+          <img (click)="removeFavourite(book.isFavourite, book._id)" src="assets/favourite.jpg" alt="" style="height: 20px;width: 20px;cursor: pointer;">
           </div>
         </div>
         <button class="cart-btn" (click)="addToCart(book._id)">

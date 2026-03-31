@@ -3,7 +3,7 @@ import { ChangeDetectorRef, Component, signal, PLATFORM_ID, Inject  } from '@ang
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
-import { RouterOutlet } from '@angular/router';
+import { RouterModule, RouterOutlet } from '@angular/router';
 import { BookService } from '../services/book.service';
 
 
@@ -11,7 +11,7 @@ import { BookService } from '../services/book.service';
   selector: 'home-root',
   templateUrl: './home.html',
   styleUrl: './home.scss',
-  imports: [ReactiveFormsModule, FormsModule, CommonModule], // ✅ HERE
+  imports: [ReactiveFormsModule, FormsModule, CommonModule, RouterModule],
 
 })
 export class Home {
