@@ -40,6 +40,10 @@ export class BookService {
     return this.http.post(`${environment.API_URL}cart/addCartItem`, data)
   }
 
+  removeItem(data:any){
+    return this.http.post(`${environment.API_URL}cart/removeItem`, data)
+  }
+
   getCart(userId:any){
     return this.http.get(`${environment.API_URL}cart/getCartItems/${userId}`)
   }
