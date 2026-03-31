@@ -1,0 +1,55 @@
+import { ChangeDetectorRef, Component, Inject, PLATFORM_ID } from '@angular/core';
+import { Header } from '../common/shared';
+import { BookService } from '../services/book.service';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+@Component({
+  selector: 'app-favourite-books',
+  imports: [Header, ReactiveFormsModule, FormsModule, CommonModule],
+  templateUrl: './favourite-books.html',
+  styleUrl: './favourite-books.scss'
+})
+export class FavouriteBooks {
+
+  currentUser:any;
+  books:any = [];
+  constructor(
+    private service: BookService,
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private cdr: ChangeDetectorRef
+  ){
+    alert("hu")
+  }
+  ngOnInit(): void {
+    alert(11)
+  if (isPlatformBrowser(this.platformId)) {
+      let user = localStorage.getItem('user');
+
+      if(user){
+        this.currentUser = JSON.parse(user);
+        this.getFavouriteBook(this.currentUser?.id)
+      }
+    }
+  }
+
+  getFavouriteBook(id:any){
+    this.service.getFavouriteBook({userId: id}).subscribe((res:any)=>{
+      this.books = res.list;
+      this.cdr.detectChanges();
+    })
+  }
+  
+    async removeFavourite(isFavourite:any, bookId:any){
+    let payload = {
+      "userId": this.currentUser?.id,
+      "bookId": bookId
+    }
+    this.service.removeFavouriteBook(payload).subscribe((res:any)=>{
+      isFavourite = !isFavourite;
+      this.getFavouriteBook(this.currentUser?.id);
+      this.cdr.detectChanges();
+    })
+  }
+
+}

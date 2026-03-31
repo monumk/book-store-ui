@@ -4,7 +4,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { BookService } from './services/book.service';
 import Swal from 'sweetalert2';
-import { Header } from '../app/common/header/header'
+import { Header } from '../app/common/header/header';
 
 
 @Component({
@@ -72,7 +72,7 @@ export class App {
   }
 
   getBooksList() {
-    this.serivce.getBooksList({}).subscribe((res: any) => {
+    this.serivce.getBooksList({page: 1, limit: 20}).subscribe((res: any) => {
       this.books = res.list;
       this.cdr.detectChanges();
     })

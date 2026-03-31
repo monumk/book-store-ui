@@ -31,4 +31,8 @@ export class BookService {
   removeFavouriteBook(data:any){
     return this.http.post(`${environment.API_URL}book/removeFavouriteBook`, data)
   }
+
+  getFavouriteBook(data:any){
+    return this.http.post(`${environment.API_URL}book/getFavouriteBooks`, data)
+  }
 }

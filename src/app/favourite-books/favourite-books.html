@@ -1,14 +1,5 @@
 <app-header></app-header>
 
-<!-- SEARCH BAR -->
-<section class="search-section">
-  <input
-    type="text"
-    placeholder="Search books, authors..."
-    [(ngModel)]="searchTerm"
-    (input)="filterBooks()"
-  />
-</section>
 
 <!-- BOOK LIST -->
 <section class="container">
@@ -27,7 +18,7 @@
           <span>₹{{ book.price }}</span>
           <div style="display: flex; align-items: center;gap: 10px;">
             <button>View</button>
-          <img (click)="book.isFavourite ? removeFavourite(book.isFavourite, book?._id): addFavourite(book.isFavourite, book?._id)" [src]="!book.isFavourite ? 'assets/unfavourite.png' : 'assets/favourite.jpg'" alt="" style="height: 20px;width: 20px;cursor: pointer;">
+          <img (click)="removeFavourite(book.isFavourite, book?._id)" src="assets/favourite.jpg" alt="" style="height: 20px;width: 20px;cursor: pointer;">
           </div>
         </div>
       </div>

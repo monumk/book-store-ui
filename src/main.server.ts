@@ -3,6 +3,8 @@ import { bootstrapApplication } from '@angular/platform-browser';
 import { App } from './app/app';
 import { provideServerRendering } from '@angular/platform-server';
 import { provideHttpClient } from '@angular/common/http';
+import { provideRouter } from '@angular/router';
+import { routes } from './app/app.routes';
 
 export default function bootstrap(context: any) {
   return bootstrapApplication(
@@ -10,7 +12,8 @@ export default function bootstrap(context: any) {
     {
       providers: [
         provideServerRendering(),
-        provideHttpClient()
+        provideHttpClient(),
+        provideRouter(routes)
       ]
     },
     context
