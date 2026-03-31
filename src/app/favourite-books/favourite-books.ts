@@ -20,8 +20,7 @@ export class FavouriteBooks {
     private cdr: ChangeDetectorRef
   ){ }
   ngOnInit(): void {
-    console.log("alled")
-  if (isPlatformBrowser(this.platformId)) {
+    if (isPlatformBrowser(this.platformId)) {
       let user = localStorage.getItem('user');
 
       if(user){

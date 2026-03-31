@@ -39,4 +39,8 @@ export class BookService {
   addCartItem(data:any){
     return this.http.post(`${environment.API_URL}cart/addCartItem`, data)
   }
+
+  getCart(userId:any){
+    return this.http.get(`${environment.API_URL}cart/getCartItems/${userId}`)
+  }
 }
