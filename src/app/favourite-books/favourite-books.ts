@@ -1,12 +1,11 @@
 import { ChangeDetectorRef, Component, Inject, PLATFORM_ID } from '@angular/core';
-import { Header } from '../common/shared';
 import { BookService } from '../services/book.service';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-favourite-books',
-  imports: [Header, ReactiveFormsModule, FormsModule, CommonModule],
+  imports: [ReactiveFormsModule, FormsModule, CommonModule],
   templateUrl: './favourite-books.html',
   styleUrl: './favourite-books.scss'
 })
@@ -20,6 +19,7 @@ export class FavouriteBooks {
     private cdr: ChangeDetectorRef
   ){ }
   ngOnInit(): void {
+    console.log("alled")
   if (isPlatformBrowser(this.platformId)) {
       let user = localStorage.getItem('user');
 

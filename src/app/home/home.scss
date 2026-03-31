@@ -1,3 +1,20 @@
+/* RESET */
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+  background: #f5f6fa;
+}
+
+/* NAVBAR */
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 40px;
+  background: #111;
+  color: #fff;
+}
+
 .logo {
   font-size: 20px;
   font-weight: 600;
@@ -25,6 +42,21 @@
   background: transparent;
   color: white;
   border: 1px solid #444;
+}
+
+/* SEARCH */
+.search-section {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.search-section input {
+  width: 500px;
+  max-width: 90%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
 }
 
 /* GRID */
@@ -100,3 +132,19 @@
   margin-top: 50px;
   color: #888;
 }
+
+
+/* HEADER */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header span {
+  cursor: pointer;
+  font-size: 20px;
+}
+
+/* INPUT STYLE */
+
