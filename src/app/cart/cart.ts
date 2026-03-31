@@ -3,6 +3,7 @@ import { ChangeDetectorRef, Component, Inject, PLATFORM_ID } from '@angular/core
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BookService } from '../services/book.service';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
@@ -20,7 +21,8 @@ export class Cart {
   constructor(
     private service: BookService,
     @Inject(PLATFORM_ID) private platformId: Object,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -34,7 +36,21 @@ export class Cart {
     }
   }
 
-  decreaseQty(e: any) {
+  decreaseQty(item: any) {
+    let payload = {
+      userId: this.currentUser?.id,
+      bookId: item?.bookId
+    }
+    this.service.decreaseQuantity(payload).subscribe((res: any) => {
+      this.getCart(this.currentUser?.id)
+      Swal.fire({
+        title: "Success",
+        html: res?.msg,
+        icon: "success",
+        confirmButtonColor: "#3e70cb",
+      })
+    })
+
 
   }
 
@@ -64,6 +80,13 @@ export class Cart {
   getCart(id: any) {
     this.service.getCart(id).subscribe((res: any) => {
       this.cartItems = res.list;
+      this.totalPrice = 0;
+      for(let k of res.list){
+          this.totalPrice += k.totalAmount;
+      }
+      if(res.list?.length<=0){
+        this.router.navigate(['/home']);
+      }
       this.cdr.detectChanges();
     })
   }

@@ -146,6 +146,7 @@ export class Header {
 
   logout(){
     localStorage.clear();
+    this.cdr.detectChanges();
   }
 
 }
