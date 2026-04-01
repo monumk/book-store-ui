@@ -2,14 +2,14 @@ import 'zone.js';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { App } from './app/app';
 import { provideServerRendering } from '@angular/platform-server';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withFetch } from '@angular/common/http';
 import { routes } from './app/app.routes';
 import { provideRouter } from '@angular/router';
 
 bootstrapApplication(App, {
   providers: [
-    // provideServerRendering(),
+    provideServerRendering(),
     provideRouter(routes),
-    provideHttpClient()
+    provideHttpClient(withFetch())
   ]
 }).catch(err => console.error(err));
