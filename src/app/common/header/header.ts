@@ -1,5 +1,5 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { ChangeDetectorRef, Component, signal, PLATFORM_ID, Inject  } from '@angular/core';
+import { ChangeDetectorRef, Component, signal, PLATFORM_ID, Inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BookService } from '../../services/book.service';
 import Swal from 'sweetalert2';
@@ -12,27 +12,27 @@ import { RouterLink } from "@angular/router";
   styleUrl: './header.scss'
 })
 export class Header {
-  currentUser:any;
+  currentUser: any;
   signupForm: any;
   loginForm: any;
-  showLogin:boolean = false;
+  showLogin: boolean = false;
   showSignup: boolean = false;
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     private fb: FormBuilder,
     private serivce: BookService,
     private cdr: ChangeDetectorRef,
-  ){
+  ) {
 
   }
 
-    ngOnInit(): void {
-    
+  ngOnInit(): void {
 
-     if (isPlatformBrowser(this.platformId)) {
+
+    if (isPlatformBrowser(this.platformId)) {
       let user = localStorage.getItem('user');
 
-      if(user){
+      if (user) {
         this.currentUser = JSON.parse(user)
       }
     }
@@ -40,7 +40,7 @@ export class Header {
     this.initLoginForm();
   }
 
-    initForm() {
+  initForm() {
     this.signupForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -49,7 +49,7 @@ export class Header {
     });
   }
 
-  initLoginForm(){
+  initLoginForm() {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
@@ -57,7 +57,7 @@ export class Header {
   }
 
 
-    openLogin() {
+  openLogin() {
     this.showLogin = true;
     console.log('Login modal');
   }
@@ -104,24 +104,24 @@ export class Header {
     }
   }
 
-  switchToSignup(){
+  switchToSignup() {
     this.showLogin = false;
     this.openSignup();
   }
 
-  closeLogin(){
+  closeLogin() {
     this.showLogin = false;
   }
 
-  onLogin(){
-    if(this.loginForm.valid){
+  onLogin() {
+    if (this.loginForm.valid) {
       let payload = {
         "email": this.loginForm.value.email,
         "password": this.loginForm.value.password
       }
 
-      this.serivce.loginUser(payload).subscribe((res:any)=>{
-        if(res.user){
+      this.serivce.loginUser(payload).subscribe((res: any) => {
+        if (res.user) {
           this.loginForm.reset();
           this.closeLogin();
           Swal.fire({
@@ -134,7 +134,7 @@ export class Header {
           this.cdr.detectChanges();
           location.reload();
         }
-      },(err)=>{
+      }, (err) => {
         Swal.fire({
           title: "Warning",
           html: err?.error?.msg,
@@ -145,7 +145,7 @@ export class Header {
     }
   }
 
-  logout(){
+  logout() {
     localStorage.clear();
     this.cdr.detectChanges();
     location.reload();

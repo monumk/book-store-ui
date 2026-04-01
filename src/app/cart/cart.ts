@@ -69,10 +69,10 @@ export class Cart {
     this.service.getCart(id).subscribe((res: any) => {
       this.cartItems = res.list;
       this.totalPrice = 0;
-      for(let k of res.list){
-          this.totalPrice += k.totalAmount;
+      for (let k of res.list) {
+        this.totalPrice += k.totalAmount;
       }
-      if(res.list?.length<=0){
+      if (res.list?.length <= 0) {
         this.router.navigate(['/home']);
       }
       this.cdr.detectChanges();

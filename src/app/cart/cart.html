@@ -1,54 +1,54 @@
 <div class="cart-container">
-  <div class="cart-header">
-    <h2>Your Cart</h2>
-    <span class="item-count">{{cartItems?.length}} {{cartItems?.length>1 ? 'Items' : 'Item'}} Items</span>
-  </div>
+    <div class="cart-header">
+        <h2>Your Cart</h2>
+        <span class="item-count">{{cartItems?.length}} {{cartItems?.length>1 ? 'Items' : 'Item'}} Items</span>
+    </div>
 
-  <div class="cart-body">
+    <div class="cart-body">
 
-    <!-- Cart Item -->
-    <div class="cart-item" *ngFor="let item of cartItems">
-      <img [src]="item.image" class="product-img" />
+        <!-- Cart Item -->
+        <div class="cart-item" *ngFor="let item of cartItems">
+            <img [src]="item.image" class="product-img" />
 
-      <div class="item-details">
-        <h3>{{ item.bookName }}</h3>
-        <p class="author">by {{ item.author }}</p>
+            <div class="item-details">
+                <h3>{{ item.bookName }}</h3>
+                <p class="author">by {{ item.author }}</p>
 
-        <div class="price-row">
-          <span class="price">₹{{ item.amount }}</span>
-          <span class="old-price">₹{{ item.oldPrice }}</span>
+                <div class="price-row">
+                    <span class="price">₹{{ item.amount }}</span>
+                    <span class="old-price">₹{{ item.oldPrice }}</span>
+                </div>
+
+                <div class="actions">
+                    <button (click)="decreaseQty(item)">−</button>
+                    <span>{{ item.quantity }}</span>
+                    <button (click)="increaseQty(item)">+</button>
+                    <button class="remove" (click)="removeItem(item)">Remove</button>
+                </div>
+            </div>
         </div>
 
-        <div class="actions">
-          <button (click)="decreaseQty(item)">−</button>
-          <span>{{ item.quantity }}</span>
-          <button (click)="increaseQty(item)">+</button>
-          <button class="remove" (click)="removeItem(item)">Remove</button>
+    </div>
+
+    <!-- Summary -->
+    <div class="cart-summary">
+        <h3>Price Details</h3>
+
+        <div class="summary-row">
+            <span>Total Price</span>
+            <span>₹{{ totalPrice }}</span>
         </div>
-      </div>
+
+        <div class="summary-row discount">
+            <span>Discount</span>
+            <span>-₹{{ discount }}</span>
+        </div>
+
+        <div class="summary-row total">
+            <span>Total Amount</span>
+            <span>₹{{ totalPrice }}</span>
+        </div>
+
+        <button class="checkout-btn">Proceed to Checkout</button>
     </div>
-
-  </div>
-
-  <!-- Summary -->
-  <div class="cart-summary">
-    <h3>Price Details</h3>
-
-    <div class="summary-row">
-      <span>Total Price</span>
-      <span>₹{{ totalPrice }}</span>
-    </div>
-
-    <div class="summary-row discount">
-      <span>Discount</span>
-      <span>-₹{{ discount }}</span>
-    </div>
-
-    <div class="summary-row total">
-      <span>Total Amount</span>
-      <span>₹{{ totalPrice }}</span>
-    </div>
-
-    <button class="checkout-btn">Proceed to Checkout</button>
-  </div>
 </div>
