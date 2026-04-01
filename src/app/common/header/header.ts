@@ -132,6 +132,7 @@ export class Header {
           })
           localStorage.setItem("user", JSON.stringify(res.user));
           this.cdr.detectChanges();
+          location.reload();
         }
       },(err)=>{
         Swal.fire({
@@ -147,6 +148,7 @@ export class Header {
   logout(){
     localStorage.clear();
     this.cdr.detectChanges();
+    location.reload();
   }
 
 }
