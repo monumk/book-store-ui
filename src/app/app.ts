@@ -6,7 +6,7 @@ import { Footer } from './footer/footer';
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrl: './app.scss',
-  imports: [Header,Footer, RouterOutlet], // ✅ HERE
+  imports: [Header,Footer, RouterOutlet],
 
 })
 export class App {
