@@ -21,9 +21,11 @@
           <img (click)="removeFavourite(book.isFavourite, book._id)" src="assets/favourite.jpg" alt="" style="height: 20px;width: 20px;cursor: pointer;">
           </div>
         </div>
+        @if (currentUser) {
         <button class="cart-btn" (click)="addToCart(book._id)">
             Add to Cart
         </button>
+      }
       </div>
 
     </div>

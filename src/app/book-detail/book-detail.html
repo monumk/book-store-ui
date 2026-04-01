@@ -3,16 +3,16 @@
 
     <!-- Left: Image -->
     <div class="image-section">
-      <img [src]="book.image" alt="book" />
+      <img [src]="book?.image" alt="book" />
     </div>
 
     <!-- Right: Details -->
     <div class="details-section">
 
-      <h1 class="title">{{ book.bookName }}</h1>
-      <p class="author">by {{ book.author }}</p>
+      <h1 class="title">{{ book?.bookName }}</h1>
+      <p class="author">by {{ book?.author }}</p>
 
-      <h2 class="price">₹{{ book.price }}</h2>
+      <h2 class="price">₹{{ book?.price }}</h2>
 
       <!-- Quantity Selector -->
       <!-- <div class="quantity-box">
@@ -22,14 +22,16 @@
       </div> -->
 
       <!-- Add to Cart -->
+       @if (currentUser) {
       <button class="cart-btn" (click)="addToCart()">
         Add to Cart
       </button>
+    }
 
       <!-- Description -->
       <div class="description">
         <h3>Description</h3>
-        <p>{{ book.description }}</p>
+        <p>{{ book?.description }}</p>
       </div>
 
     </div>
