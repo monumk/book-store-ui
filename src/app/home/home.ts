@@ -3,15 +3,17 @@ import { ChangeDetectorRef, Component, signal, PLATFORM_ID, Inject  } from '@ang
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
-import { RouterModule, RouterOutlet } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { BookService } from '../services/book.service';
+import { MatButtonModule } from '@angular/material/button';
+
 
 
 @Component({
   selector: 'home-root',
   templateUrl: './home.html',
   styleUrl: './home.scss',
-  imports: [ReactiveFormsModule, FormsModule, CommonModule, RouterModule],
+  imports: [ReactiveFormsModule, FormsModule, CommonModule, RouterModule, MatButtonModule],
 
 })
 export class Home {
@@ -40,36 +42,7 @@ export class Home {
     this.getBooksList();
   }
   protected readonly title = signal('book-store-ui');
-
-  // filteredBooks = [...this.books];
   searchTerm = '';
-  // categories = ['Self Help', 'Finance', 'Programming', 'Fiction'];
-  // selectedCategory = 'All';
-
-  filterBooks() {
-    this.applyFilters();
-  }
-
-  filterByCategory(category: string) {
-    // this.selectedCategory = category;
-    this.applyFilters();
-  }
-
-  applyFilters() {
-    // const term = this.searchTerm.toLowerCase();
-
-    // this.filteredBooks = this.books.filter((book:any) => {
-    //   const matchesSearch =
-    //     book.title.toLowerCase().includes(term) ||
-    //     book.author.toLowerCase().includes(term);
-
-    //   const matchesCategory =
-    //     this.selectedCategory === 'All' ||
-    //     book.category === this.selectedCategory;
-
-    //   return matchesSearch && matchesCategory;
-    // });
-  }
 
   getBooksList() {
     this.serivce.getBooksList({page: 1, limit: 20}).subscribe((res: any) => {
