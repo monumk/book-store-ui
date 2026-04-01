@@ -43,12 +43,6 @@ export class Cart {
     }
     this.service.decreaseQuantity(payload).subscribe((res: any) => {
       this.getCart(this.currentUser?.id)
-      Swal.fire({
-        title: "Success",
-        html: res?.msg,
-        icon: "success",
-        confirmButtonColor: "#3e70cb",
-      })
     })
 
 
@@ -61,12 +55,6 @@ export class Cart {
     }
     this.service.addCartItem(payload).subscribe((res: any) => {
       this.getCart(this.currentUser?.id)
-      Swal.fire({
-        title: "Success",
-        html: res?.msg,
-        icon: "success",
-        confirmButtonColor: "#3e70cb",
-      })
     })
 
   }
